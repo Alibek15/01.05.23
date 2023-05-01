@@ -34,24 +34,24 @@ public class MyHashTable<K,V> {
     public void put(K key, V value){
         size+=1;
          var elem = chainArray[hash(key)];
-        // Check if a linked list exists at the computed index
+        
         if(Objects.isNull(elem)){
             elem= new HashNode<>(key, value);
         }
         else{
-            HashNode<K,V> current = elem;
-            while(Objects.nonNull(current.next)){
-                if(current.key.equals(key)){
-                    current.value = value;
+            HashNode<K,V> val = elem;
+            while(Objects.nonNull(val.next)){
+                if(val.key.equals(key)){
+                    val.value = value;
                     return;
                 }
-                current = current.next;
+                val = val.next;
             }
-            if(current.key.equals(key)){
-                current.value = value;
+            if(val.key.equals(key)){
+                val.value = value;
             }
             else{
-                current.next = new HashNode<>(key, value);
+                val.next = new HashNode<>(key, value);
             }
         }
 
@@ -59,46 +59,46 @@ public class MyHashTable<K,V> {
     public V get(K key){
 
 
-        HashNode<K,V> current = chainArray[hash(key)];
-        while(Objects.nonNull(current)){
-            if(current.key.equals(key)){
-                return current.value;
+        HashNode<K,V> val = chainArray[hash(key)];
+        while(Objects.nonNull(val)){
+            if(val.key.equals(key)){
+                return val.value;
             }
-            current = current.next;
+            val = val.next;
         }
 
-        return current.value;
+        return val.value;
     }
     public V remove(K key){
 
 
-        HashNode<K,V> current = chainArray[hash(key)];
+        HashNode<K,V> val = chainArray[hash(key)];
         HashNode<K,V> previous = null;
-        while(Objects.nonNull(current)){
-            if(current.key.equals(key)){
+        while(Objects.nonNull(val)){
+            if(val.key.equals(key)){
                 if(previous.equals( null)){
-                    chainArray[hash(key)] = current.next;
+                    chainArray[hash(key)] = val.next;
                 }
                 else{
-                    previous.next = current.next;
+                    previous.next = val.next;
                 }
                 size--;
 
             }
-            previous = current;
-            current = current.next;
+            previous = val;
+            val = val.next;
         }
-        return current.value;
+        return val.value;
     }
     public boolean contains(V value){
         int index =0;
        while(index<M) {
-           HashNode<K, V> current = chainArray[index];
-           while (Objects.nonNull(current)){
-               if(current.value.equals(value)){
+           HashNode<K, V> val = chainArray[index];
+           while (Objects.nonNull(val)){
+               if(val.value.equals(value)){
                    return true;
                }
-               current = current.next;
+               val = val.next;
            }
        }
        return false;
@@ -106,12 +106,12 @@ public class MyHashTable<K,V> {
     public K getKey(V value){
         int index =0;
         while(index<M) {
-            HashNode<K, V> current = chainArray[index];
-            while (Objects.nonNull(current)){
-                if(current.value.equals(value)){
-                    return (K)current;
+            HashNode<K, V> val = chainArray[index];
+            while (Objects.nonNull(val)){
+                if(val.value.equals(value)){
+                    return (K)val;
                 }
-                current = current.next;
+                val = val.next;
             }
         }
         return null;
